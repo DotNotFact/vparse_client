@@ -1,0 +1,34 @@
+{
+  "expo": {
+    "name": "vparse",
+    "slug": "vparse",
+    "version": "1.0.0",
+    "orientation": "portrait",
+    "icon": "./app/assets/icon.png",
+    "userInterfaceStyle": "dark",
+    "splash": {
+      "image": "./app/assets/splash.png",
+      "resizeMode": "contain",
+      "backgroundColor": "#111111"
+    },
+    "assetBundlePatterns": ["**/*"],
+    "ios": {
+      "supportsTablet": true,
+      "requireFullScreen": true,
+      "bundleIdentifier": "com.vparse"
+    },
+    "android": {
+      "adaptiveIcon": {
+        "foregroundImage": "./app/assets/adaptive-icon.png",
+        "backgroundColor": "#ffffff"
+      },
+      "package": "com.vparse"
+    },
+    "web": {
+      "favicon": "./app/assets/favicon.png"
+    },
+    "updates": {
+      "fallbackToCacheTimeout": 0
+    }
+  }
+}
