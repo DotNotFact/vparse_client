@@ -4,8 +4,8 @@ export type TypeRootStackParamList = {
   Auth: undefined;
   Home: undefined;
   Profile: undefined;
-  // Favorites: undefined;
-  // Search: undefined;
+  Favorites: undefined;
+  AdminButton: undefined;
   Screen404: undefined;
   // User: {
   //   slug: string;
@@ -21,5 +21,7 @@ type TypeRootStackAdminList = {
 export interface IRoute {
   name: keyof TypeRootStackParamList;
   component: ComponentType;
+  headerShown?: boolean;
+  filterShown?: boolean;
   isAdmin?: boolean;
 }

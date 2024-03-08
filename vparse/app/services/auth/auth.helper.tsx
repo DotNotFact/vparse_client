@@ -7,14 +7,15 @@ import {
   EnumSecureStore,
   EnumAsyncStorage,
 } from "@/shared/types/auth.interface";
+import { IUser } from "@/shared/types/user.interface";
 
 export const getAccessToken = async () => {
   const accessToken = await getItemAsync(EnumSecureStore.ACCESS_TOKEN);
   return accessToken || null;
 };
 
-export const saveTokenStorage = async (data: ITokens) => {
-  await setItemAsync(EnumSecureStore.ACCESS_TOKEN, data.accessToken);
+export const saveTokenStorage = async (token: string) => {
+  await setItemAsync(EnumSecureStore.ACCESS_TOKEN, token);
 };
 
 export const deleteTokenStorage = async () => {
@@ -31,12 +32,13 @@ export const getUserFromStorage = async () => {
   }
 };
 
-export const saveUserToStorage = async (data: IAuthResponse) => {
-  await saveTokenStorage(data);
+export const setUserFromStorage = async (user: IUser) => {
   try {
-    await AsyncStorage.setItem(
-      EnumAsyncStorage.USER,
-      JSON.stringify(data.user)
-    );
+    await AsyncStorage.setItem(EnumAsyncStorage.USER, JSON.stringify(user));
   } catch (e) {}
+};
+
+export const saveUserToStorage = async (data: IAuthResponse) => {
+  await saveTokenStorage(data.accessToken);
+  await setUserFromStorage(data.user);
 };

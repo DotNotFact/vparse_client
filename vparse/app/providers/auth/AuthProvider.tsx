@@ -3,7 +3,7 @@ import {
   getUserFromStorage,
 } from "@/services/auth/auth.helper";
 import { IContext, TypeUserState } from "./auth-provider.interface";
-// import * as SplashScreen from "expo-splash-screen";
+import * as SplashScreen from "expo-splash-screen";
 
 import {
   FC,
@@ -15,7 +15,7 @@ import {
 
 export const AuthContext = createContext({} as IContext);
 
-// let ignore = SplashScreen.preventAutoHideAsync();
+let ignore = SplashScreen.preventAutoHideAsync();
 
 const AuthProvider: FC<PropsWithChildren<unknown>> = ({ children }) => {
   const [user, setUser] = useState<TypeUserState>(null);
@@ -33,11 +33,11 @@ const AuthProvider: FC<PropsWithChildren<unknown>> = ({ children }) => {
         }
       } catch {
       } finally {
-        //  await SplashScreen.hideAsync();
+        await SplashScreen.hideAsync();
       }
     };
 
-    // let ignore = checkAccessToken();
+    let ignore = checkAccessToken();
 
     return () => {
       isMounted = false;

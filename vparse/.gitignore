@@ -29,11 +29,8 @@ yarn-error.*
 .DS_Store
 *.pem
 
-# local env files
-.env.example
-.env.staging
+# local env files 
 .env*.local
-.env.local
 .env
 
 # typescript

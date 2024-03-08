@@ -9,9 +9,11 @@ import axios from "axios";
 
 export const $api = axios.create({
   baseURL: SERVER_URL,
-  // headers: {
-  //   "Content-Type": "application/json",
-  // },
+  withCredentials: true,
+  headers: {
+    "Accept-Charset": "utf-8",
+    "Content-Type": "application/json",
+  },
 });
 
 // $api.interceptors.request.use(async (config) => {

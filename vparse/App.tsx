@@ -1,10 +1,11 @@
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
-import { SafeAreaProvider } from "react-native-safe-area-context";
-import AuthProvider from "@/providers/auth/AuthProvider";
-import Navigation from "@/navigation/Navigation";
 import { StatusBar as ExpoStatusBar } from "expo-status-bar";
-import Toast from "@/components/ui/Toast";
+import AuthProvider from "@/providers/auth/AuthProvider";
+import { Platform, StatusBar, View } from "react-native";
+import Navigation from "@/navigation/Navigation";
+import { Toast } from "@/components/ui";
 
+//  tree shaking
 const queryClient = new QueryClient({
   defaultOptions: {
     queries: {
@@ -13,55 +14,109 @@ const queryClient = new QueryClient({
   },
 });
 
+// const { colorScheme, toggleColorScheme } = useColorScheme();
+// const navigation = useNavigation();
+// const [fontsLoaded, fontError] = useFonts({
+//   SpaceGroteskSemiBold: require("../font/SpaceGrotesk-SemiBold.ttf"),
+//   SpaceGroteskBold: require("../font/SpaceGrotesk-Bold.ttf"),
+//   SpaceGroteskMedium: require("../font/SpaceGrotesk-Medium.ttf"),
+// });
+
+// const onLayoutRootView = useCallback(async () => {
+//   if (fontsLoaded || fontError) {
+//     await SplashScreen.hideAsync();
+//   }
+// }, [fontsLoaded, fontError]);
+
+// if (!fontsLoaded) {
+//   return null;
+// }
+
+const android = Platform.OS == "android";
+
 export default function App() {
   return (
-    <>
-      <ExpoStatusBar style="dark" translucent={true} hidden={false} />
+    <View
+      // onLayout={onLayoutRootView}
+      style={{
+        flex: 1,
+        paddingTop: android ? StatusBar.currentHeight : 0,
+      }}
+    >
+      <ExpoStatusBar
+        style="light"
+        hidden={false}
+        translucent={true}
+        backgroundColor="#19191A"
+      />
       <QueryClientProvider client={queryClient}>
         <AuthProvider>
-          <SafeAreaProvider>
-            <Navigation />
-          </SafeAreaProvider>
+          {/* SafeAreaProvider */}
+          <Navigation />
           <Toast />
         </AuthProvider>
       </QueryClientProvider>
-    </>
+    </View>
   );
 }
 
-// @react-navigation/bottom-tabs
-// @react-navigation/drawer
+// export default   {
+//   const colorModeManager: StorageManager = {
+//     get: async () => {
+//       try {
+//         let val = await AsyncStorage.getItem("@my-app-color-mode");
+//         return val === "dark" ? "dark" : "light";
+//       } catch (e) {
+//         console.log(e);
+//         return "light";
+//       }
+//     },
+//     set: async (value: ColorMode) => {
+//       try {
+//         await AsyncStorage.setItem("@my-app-color-mode", value);
+//       } catch (e) {
+//         console.log(e);
+//       }
+//     },
+//   };
+//   return (
+//     <NativeBaseProvider theme={theme} colorModeManager={colorModeManager}>
+//       {/* Your App Goes Here */}
+//     </NativeBaseProvider>
+//   );
+// };
 
-// react-native-dropdown-select-list
+// // @react-navigation/bottom-tabs
+// // @react-navigation/drawer
 
-// expo-av - позволяет воспроизводить аудио и видео файлы, записывать аудио, управлять воспроизведением, и многое другое.
-// expo-blur - предоставляет компонент BlurView, который позволяет добавлять эффект размытия (blur) к частям интерфейса.
-// expo-checkbox - предоставляет компонент Checkbox, который позволяет создавать переключатели (чекбоксы)
-// expo-image-picker - предоставляет API для выбора изображений из галереи устройства или съемки новых фотографий с камеры.
+// // react-native-dropdown-select-list
 
-// "extra": {
-//   "eas": {
-//     "projectId": "projectId-YKFH7vuil2iju5hbuk4"
-//   }
-// }
+// // expo-av - позволяет воспроизводить аудио и видео файлы, записывать аудио, управлять воспроизведением, и многое другое.
+// // expo-blur - предоставляет компонент BlurView, который позволяет добавлять эффект размытия (blur) к частям интерфейса.
+// // expo-checkbox - предоставляет компонент Checkbox, который позволяет создавать переключатели (чекбоксы)
+// // expo-image-picker - предоставляет API для выбора изображений из галереи устройства или съемки новых фотографий с камеры.
 
-// react-native-wheel-scrollview-picker - для возраста в фильтре
+// // react-native-wheel-scrollview-picker - для возраста в фильтре
 
-// "@expo/metro-runtime": "~3.1.3",
-// "@react-native-community/cli-platform-android": "^12.3.5",
-// "babel-plugin-inline-dotenv": "^1.7.0",
-// "babel-preset-react-native": "^4.0.1",
-// "expo-blur": "~12.9.2",
-// "expo-clipboard": "^5.0.1",
-// "expo-notifications": "^0.27.6",
-// "expo-splash-screen": "^0.26.4",
-// "expo-status-bar": "~1.11.1",
-// "react-dom": "^18.2.0",
-// "react-native-app-auth": "^7.1.0",
-// "react-native-dropdown-picker": "^5.4.6",
-// "react-native-gesture-handler": "^2.15.0",
-// "react-native-pell-rich-editor": "^1.9.0",
-// "react-native-render-html": "^6.3.4",
-// "react-native-screens": "^3.29.0",
-// "react-native-toast-message": "^2.2.0",
-// "react-native-web": "~0.19.6",
+// // @expo/metro-runtime
+// // @react-native-community/cli-platform-android
+// // babel-plugin-inline-dotenv
+// // babel-preset-react-native
+// // expo-blur
+// // expo-clipboard
+// // expo-notifications
+// // expo-splash-screen
+// // expo-status-bar
+// // react-dom
+// // react-native-app-auth
+// // react-native-pell-rich-editor
+// // react-native-render-html
+// // react-native-screens
+// // react-native-toast-message
+// // react-native-web
+
+// // "extra": {
+// //   "eas": {
+// //     "projectId": "projectId-*********"
+// //   }
+// // }

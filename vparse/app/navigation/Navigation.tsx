@@ -1,8 +1,6 @@
 import { useCheckAuth } from "@/providers/auth/useCheckAuth";
-import PrivateNavigator from "@/navigation/PrivateNavigator";
+import BottomTabNavigation from "./BottomTabNavigation";
 import { FC, useEffect, useState } from "react";
-import { BottomMenu } from "@/components/ui";
-import { useAuth } from "@/hooks/useAuth";
 
 import {
   NavigationContainer,
@@ -10,8 +8,6 @@ import {
 } from "@react-navigation/native";
 
 const Navigation: FC = () => {
-  const { user } = useAuth();
-
   const [currentRoute, setCurrentRoute] = useState<string | undefined>(
     undefined
   );
@@ -33,14 +29,9 @@ const Navigation: FC = () => {
   useCheckAuth(currentRoute);
 
   return (
-    <>
-      <NavigationContainer ref={navRef}>
-        <PrivateNavigator />
-      </NavigationContainer>
-      {user && currentRoute && (
-        <BottomMenu nav={navRef.navigate} currentRoute={currentRoute} />
-      )}
-    </>
+    <NavigationContainer ref={navRef}>
+      <BottomTabNavigation />
+    </NavigationContainer>
   );
 };
 
