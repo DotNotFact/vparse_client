@@ -18,8 +18,12 @@ export const userMenuItems: IMenuItem[] = [
 export const adminMenuItems: IMenuItem[] = [
   {
     iconName: "shield",
-    path: "Admin",
+    path: "RoleManager",
   },
+  // {
+  //   iconName: "plus",
+  //   path: "RoleManager",
+  // },
 ];
 
 export const menuItems: IMenuItem[] = [...userMenuItems, ...adminMenuItems];

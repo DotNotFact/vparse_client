@@ -14,6 +14,7 @@ export type TypeRootStackParamList = {
 
 type TypeRootStackAdminList = {
   Admin: undefined;
+  RoleManager: undefined;
   // UserEdit: { id: string };
   // UserList: undefined;
 };

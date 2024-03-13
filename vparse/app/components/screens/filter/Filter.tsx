@@ -4,6 +4,53 @@ import { Switch, TextInput, TouchableOpacity, View } from "react-native";
 import { SelectList } from "react-native-dropdown-select-list";
 import { ScrollView } from "react-native-gesture-handler";
 
+export interface IFilterProps {
+  // Сервер
+  count?: number;
+  offset?: number;
+  // Критерии поиска
+  age_from?: string;
+  age_to?: string;
+  sex?: string;
+  sort?: string;
+  status?: string;
+  from_list?: string;
+  // Дополнительно
+  has_photo?: string;
+  online?: string;
+  // can_write_private_message: string;
+  // can_send_friend_request: string;
+  // can_see_all_posts: string;
+  // common_count: string;
+  //
+  fields?: string;
+  //
+  q?: string;
+  city?: number;
+  city_id?: number;
+  country?: number;
+  country_id?: number;
+  hometown?: string;
+  university_country?: number;
+  university?: number;
+  university_year?: number;
+  university_faculty?: number;
+  university_chair?: number;
+  birth_day?: number;
+  birth_month?: number;
+  birth_year?: number;
+  school_country?: number;
+  school_city?: number;
+  school_class?: number;
+  school?: number;
+  school_year?: number;
+  religion?: string;
+  company?: string;
+  position?: string;
+  group_id?: number;
+  screen_ref?: string;
+}
+
 export const Filter = () => {
   const [filter, setFilter] = useState<any>({}); // IFilterProps>({});
 

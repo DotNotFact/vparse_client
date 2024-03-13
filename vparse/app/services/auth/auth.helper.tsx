@@ -1,13 +1,12 @@
 import { deleteItemAsync, getItemAsync, setItemAsync } from "expo-secure-store";
 import AsyncStorage from "@react-native-async-storage/async-storage";
+import { IUser } from "@/shared/types/user.interface";
 
 import {
-  ITokens,
   IAuthResponse,
   EnumSecureStore,
   EnumAsyncStorage,
 } from "@/shared/types/auth.interface";
-import { IUser } from "@/shared/types/user.interface";
 
 export const getAccessToken = async () => {
   const accessToken = await getItemAsync(EnumSecureStore.ACCESS_TOKEN);
@@ -35,7 +34,9 @@ export const getUserFromStorage = async () => {
 export const setUserFromStorage = async (user: IUser) => {
   try {
     await AsyncStorage.setItem(EnumAsyncStorage.USER, JSON.stringify(user));
-  } catch (e) {}
+  } catch (e) {
+    console.error(e);
+  }
 };
 
 export const saveUserToStorage = async (data: IAuthResponse) => {
