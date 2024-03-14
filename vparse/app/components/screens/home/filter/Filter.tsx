@@ -8,6 +8,7 @@ export interface IFilterProps {
   // Сервер
   count?: number;
   offset?: number;
+
   // Критерии поиска
   age_from?: string;
   age_to?: string;
@@ -15,6 +16,7 @@ export interface IFilterProps {
   sort?: string;
   status?: string;
   from_list?: string;
+
   // Дополнительно
   has_photo?: string;
   online?: string;

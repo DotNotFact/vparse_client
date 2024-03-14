@@ -7,10 +7,12 @@ import Button from "@/components/ui/button/Button";
 import { getAuthUrl } from "@/config/api.config";
 import { HorizontalRule } from "@/components/ui";
 import Text from "@/components/ui/text/Text";
+import { Feather } from "@expo/vector-icons";
 import WebView from "react-native-webview";
 import { useAuth } from "@/hooks/useAuth";
 import { FC, useState } from "react";
-import { Feather } from "@expo/vector-icons";
+import Accordion from "@/components/ui/accordion/Accordion";
+import { data } from "@/shared/constants";
 
 // +, выпадающий список, чтобы скрыть ненужную информацию
 export const Auth: FC = () => {
@@ -56,66 +58,28 @@ export const Auth: FC = () => {
         >
           <ScrollView
             className="p-4 w-full h-full"
-            contentContainerStyle={{ paddingBottom: 86 }}
+            contentContainerStyle={{ paddingBottom: 98 }}
           >
             <View>
-              <View className="gap-1">
-                <View className="justify-between items-center flex-row">
-                  <View className="items-center flex-row gap-2">
-                    <Feather
-                      name={"heart"}
-                      size={26}
-                      color={getColor("white.400")}
-                    />
-                    <Text className="text-xl font-bold">Авторизация</Text>
-                  </View>
-                  <Text>ВПарсе v0.1</Text>
+              <View className="justify-between items-center flex-row">
+                <View className="items-center flex-row">
+                  <Feather
+                    name={"heart"}
+                    size={26}
+                    color={getColor("white.400")}
+                  />
+                  <Text className="text-xl font-medium ml-2">Авторизация</Text>
                 </View>
-
-                <HorizontalRule />
-
-                <View>
-                  <Text className="text-xl font-bold">Добро пожаловать!</Text>
-
-                  <Text className="mt-2 ml-2">
-                    Здесь начинается твоё путешествие в мир новых знакомств и
-                    интересных людей! Наслаждайся лёгким и быстрым способом
-                    найти людей с похожими интересами.
-                  </Text>
-                </View>
-
-                <HorizontalRule />
-
-                <View>
-                  <Text className="text-xl font-bold">
-                    Присоединяйся одним нажатием!
-                  </Text>
-
-                  <Text className="mt-2 ml-2">
-                    Нажми на кнопку ниже, чтобы войти с помощью твоей учётной
-                    записи VK. Мы уважаем твою приватность и не публикуем ничего
-                    без твоего разрешения. Безопасное и удобное использование —
-                    наш приоритет.
-                  </Text>
-                </View>
-
-                <HorizontalRule />
-
-                <View>
-                  <Text className="text-xl font-bold">
-                    Начни новую главу общения
-                  </Text>
-
-                  <Text className="mt-2 ml-2">
-                    Не упусти шанс сделать новые интересные знакомства уже
-                    сегодня. Пусть каждый день будет шагом к новым впечатлениям
-                    и замечательным людям в твоей жизни. Всё, что тебе нужно, —
-                    это начать!
-                  </Text>
-                </View>
+                <Text>ВПарсе v0.1</Text>
               </View>
 
               <HorizontalRule />
+
+              {data.map((value, index) => {
+                return (
+                  <Accordion value={value} key={index} type={value.type} />
+                );
+              })}
 
               <View className="mt-2">
                 <Image
@@ -127,10 +91,7 @@ export const Auth: FC = () => {
             </View>
           </ScrollView>
 
-          <Button
-            className="py-3 px-4 absolute bottom-0"
-            onPress={handleLoginPress}
-          >
+          <Button className="p-4 absolute bottom-0" onPress={handleLoginPress}>
             Войти
           </Button>
         </LinearGradient>

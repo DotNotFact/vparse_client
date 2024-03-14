@@ -1,7 +1,6 @@
+import { IFilterProps } from "@/components/screens/home/filter/Filter";
 import { getUserUrl } from "@/config/api.config";
 import { $api } from "../api/api";
-import { AxiosResponse } from "axios";
-import { IFilterProps } from "@/components/screens/filter/Filter";
 
 interface IPaginationSearchParams {
   vkId: string;
@@ -9,8 +8,8 @@ interface IPaginationSearchParams {
   filters: IFilterProps;
 }
 
+// : Promise<AxiosResponse>
 export const UserService = {
-  // : Promise<AxiosResponse>
   async Search({ vkId, page, filters }: IPaginationSearchParams) {
     const response = await $api.get(
       getUserUrl("/Search") + `?vkId=${vkId}&page=${page}`,
@@ -21,7 +20,7 @@ export const UserService = {
     return response.data;
   },
 
-  async AddSwipe(): Promise<AxiosResponse> {
-    return await $api.get(getUserUrl("/AddSwipe"));
+  async AddSwipe(vkId: string) {
+    await $api.get(getUserUrl("/AddSwipe") + `?vkId=${vkId}`);
   },
 };

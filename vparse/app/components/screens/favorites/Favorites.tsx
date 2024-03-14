@@ -15,12 +15,12 @@ export const Favorites = () => {
 
   const { user } = useAuth();
 
-  const handleRemoveBookmark = (bookmarkUserId: string) => {
+  const handleRemoveBookmark = (favoriteUserId: string) => {
     try {
-      if (!user) return;
-      const { vkId } = user;
-
-      FavoriteService.removeFromFavorites(vkId, bookmarkUserId);
+      FavoriteService.removeFromFavorites({
+        vkId: user!.vkId,
+        favoriteUserId: favoriteUserId,
+      });
       setRerender((value: boolean) => !value);
     } catch (error) {
       console.error("Ошибка при удалении пользователя из закладок: ", error);
@@ -37,12 +37,18 @@ export const Favorites = () => {
 
       const fetchBookmarks = async () => {
         try {
-          if (!user) return;
+          const response = await FavoriteService.getFavorites(user!.vkId);
 
-          const response = await FavoriteService.getFavorites(user.vkId);
+          if (response && response.length > 0) {
+            // Декодирование URL каждого изображения
+            const decodedFavorites = response.map(
+              (favorite: { imageUrl: string }) => ({
+                ...favorite,
+                imageUrl: decodeURIComponent(favorite.imageUrl),
+              })
+            );
 
-          if (response) {
-            setFavorites(response.data);
+            setFavorites(decodedFavorites);
           }
         } catch (error) {
           console.error("Ошибка получения пользователей из закладок: ", error);
@@ -56,7 +62,6 @@ export const Favorites = () => {
       };
     }, [rerender])
   );
-
   return (
     <MasonryList
       style={{ flex: 1 }}
@@ -74,7 +79,7 @@ export const Favorites = () => {
                 borderRadius: 5,
                 position: "relative",
               }} // Пример использования аспектного соотношения для динамической высоты
-              resizeMode="stretch" // cover
+              resizeMode="cover" // cover
               source={{ uri: user.imageUrl }}
             />
             <View
@@ -103,7 +108,7 @@ export const Favorites = () => {
           </View>
         );
       }}
-      ListFooterComponent={<ListFooterComponent />}
+      ListFooterComponent={!favorites ? <ListFooterComponent /> : undefined}
     />
   );
 };

@@ -9,7 +9,10 @@ const Text: FC<PropsWithChildren<IText>> = ({
   ...rest
 }) => {
   return (
-    <TText className={cn("text-lg text-white", className)} {...rest}>
+    <TText
+      className={cn("text-lg font-normal text-white", className)}
+      {...rest}
+    >
       {children}
     </TText>
   );

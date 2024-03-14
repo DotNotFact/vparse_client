@@ -1,5 +1,4 @@
 import { getFavoriteUrl } from "@/config/api.config";
-import { AxiosResponse } from "axios";
 import { $api } from "../api/api";
 
 export const FavoriteService = {
@@ -10,17 +9,22 @@ export const FavoriteService = {
     return response.data;
   },
 
-  async addToFavorites(vkId: string, favoriteUserId: string, imageUrl: string) {
-    await $api.post(
-      getFavoriteUrl("/AddToFavorites") +
-        `?vkId=${vkId}&favoriteUserId=${favoriteUserId}&imageUrl=${imageUrl}`
-    );
+  async addToFavorites(props: IAddToFavorites) {
+    await $api.post(getFavoriteUrl("/AddToFavorites"), props);
   },
 
-  async removeFromFavorites(vkId: string, bookmarkUserId: string) {
-    await $api.get(
-      getFavoriteUrl("/RemoveFromFavorites") +
-        `?vkId=${vkId}&bookmarkUserId=${bookmarkUserId}`
-    );
+  async removeFromFavorites(props: IRemoveFromFavorites) {
+    await $api.post(getFavoriteUrl("/RemoveFromFavorites"), props);
   },
 };
+
+interface IAddToFavorites {
+  vkId: string;
+  imageUrl: string;
+  favoriteUserId: number;
+}
+
+interface IRemoveFromFavorites {
+  vkId: string;
+  favoriteUserId: string;
+}

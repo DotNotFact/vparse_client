@@ -20,7 +20,7 @@ export const RoleManager = () => {
   const handleAddDonate = () => {
     if (roleManager?.userId && roleManager.role) {
       try {
-        AdminService.addRole(roleManager);
+        AdminService.getPromocode(roleManager);
       } catch (e) {
         console.log(e);
       }
