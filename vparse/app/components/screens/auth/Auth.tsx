@@ -1,5 +1,6 @@
 import { getAuthGradientColors, getColor } from "@/config/colors.config";
 import { saveUserToStorage } from "@/services/auth/auth.helper";
+import Accordion from "@/components/ui/accordion/Accordion";
 import { AuthService } from "@/services/auth/auth.service";
 import { View, Image, ScrollView } from "react-native";
 import { LinearGradient } from "expo-linear-gradient";
@@ -9,12 +10,10 @@ import { HorizontalRule } from "@/components/ui";
 import Text from "@/components/ui/text/Text";
 import { Feather } from "@expo/vector-icons";
 import WebView from "react-native-webview";
+import { data } from "@/shared/constants";
 import { useAuth } from "@/hooks/useAuth";
 import { FC, useState } from "react";
-import Accordion from "@/components/ui/accordion/Accordion";
-import { data } from "@/shared/constants";
 
-// +, выпадающий список, чтобы скрыть ненужную информацию
 export const Auth: FC = () => {
   const [isWebView, setIsWebView] = useState(false);
   const { setUser } = useAuth();
@@ -70,7 +69,7 @@ export const Auth: FC = () => {
                   />
                   <Text className="text-xl font-medium ml-2">Авторизация</Text>
                 </View>
-                <Text>ВПарсе v0.1</Text>
+                <Text>VПарсе v0.1</Text>
               </View>
 
               <HorizontalRule />

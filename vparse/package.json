@@ -11,6 +11,7 @@
   "dependencies": {
     "@expo/metro-runtime": "~3.1.3",
     "@expo/vector-icons": "^13.0.0",
+    "@gorhom/bottom-sheet": "^4",
     "@nonam4/react-native-bottom-sheet": "^2.2.4",
     "@react-native-async-storage/async-storage": "^1.22.0",
     "@react-native-seoul/masonry-list": "^1.4.2",

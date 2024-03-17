@@ -1,8 +1,9 @@
-import { HorizontalRule, Text } from "@/components/ui";
-import { useState } from "react";
 import { Switch, TextInput, TouchableOpacity, View } from "react-native";
 import { SelectList } from "react-native-dropdown-select-list";
 import { ScrollView } from "react-native-gesture-handler";
+import { HorizontalRule, Text } from "@/components/ui";
+import { getColor } from "@/config/colors.config";
+import { useState } from "react";
 
 export interface IFilterProps {
   // Сервер
@@ -53,8 +54,8 @@ export interface IFilterProps {
   screen_ref?: string;
 }
 
-export const Filter = () => {
-  const [filter, setFilter] = useState<any>({}); // IFilterProps>({});
+export const Filter = ({ onApplyFilters }: any) => {
+  const [filter, setFilter] = useState<IFilterProps>({}); // IFilterProps>({});
 
   const handleFilterChange = (key: any, value: any) => {
     const newFilter = { ...filter, [key]: value };
@@ -62,7 +63,7 @@ export const Filter = () => {
   };
 
   const toggleApplyFilters = () => {
-    // navigation.navigate("Main", { filter: filter });
+    onApplyFilters(filter);
   };
 
   const options = {
@@ -94,17 +95,17 @@ export const Filter = () => {
   };
 
   return (
-    <ScrollView>
+    <ScrollView style={{ backgroundColor: getColor("gray") }}>
       <View className="p-3" style={{ flex: 1 }}>
         <View className="justify-center items-center">
-          <Text className="text-[#111] text-xl font-semibold">Фильтры</Text>
+          <Text className="text-[#111] text-xl font-medium">Фильтры</Text>
         </View>
 
         <HorizontalRule />
 
-        <View className="gap-3">
+        <View className="p-3">
           <Text>Критерии поиска</Text>
-          <View className="gap-2">
+          <View className="p-3">
             <Text>Возраст</Text>
 
             <View
@@ -136,22 +137,22 @@ export const Filter = () => {
               />
             </View>
 
-            <View className="gap-2">
+            <View className="p-3">
               <Text>Пол</Text>
 
               <SelectList
-                placeholder="Выбрать"
                 setSelected={(value: any) => handleFilterChange("sex", value)}
                 data={options.sex}
+                {...baseSelectListStyle}
               />
             </View>
 
             <View className="gap-2">
               <Text>Сортировать по</Text>
               <SelectList
-                placeholder="Выбрать"
                 setSelected={(value: any) => handleFilterChange("sort", value)}
                 data={options.sort}
+                {...baseSelectListStyle}
               />
             </View>
 
@@ -159,11 +160,11 @@ export const Filter = () => {
               <Text>Семейное положение</Text>
 
               <SelectList
-                placeholder="Выбрать"
                 setSelected={(value: any) =>
                   handleFilterChange("status", value)
                 }
                 data={options.status}
+                {...baseSelectListStyle}
               />
             </View>
 
@@ -171,11 +172,11 @@ export const Filter = () => {
               <Text>Осуществить поиск среди</Text>
 
               <SelectList
-                placeholder="Выбрать"
                 setSelected={(value: any) =>
                   handleFilterChange("from_list", value)
                 }
                 data={options.fromList}
+                {...baseSelectListStyle}
               />
             </View>
           </View>
@@ -283,4 +284,49 @@ export const Filter = () => {
       </View>
     </ScrollView>
   );
+};
+
+// +-+- еще есть
+const baseSelectListStyle = {
+  search: false,
+  placeholder: "Выбрать",
+  boxStyles: {
+    borderColor: "#f1f1f1",
+    color: "#cccc",
+    lineHeight: 28,
+    fontSize: 18,
+  },
+  dropdownStyles: {
+    borderColor: "#f1f1f1",
+  },
+  boxSelectListStyle: {
+    borderColor: "#f1f1f1",
+  },
+  inputStyles: {
+    color: "#cccc",
+  },
+  dropdownTextStyles: {
+    color: "#cccc",
+  },
+};
+
+const options = {
+  role: [
+    { key: "0", value: "Standart" },
+    { key: "1", value: "VIP" },
+    { key: "2", value: "Super-VIP" },
+    { key: "3", value: "Premium" },
+    { key: "3", value: "Elite" },
+    { key: "4", value: "Admin" },
+  ],
+  time: [
+    { key: "0", value: "1 день" },
+    { key: "1", value: "3 дня" },
+    { key: "2", value: "7 дней" },
+    { key: "3", value: "14 дней" },
+    { key: "4", value: "30 дней" },
+    { key: "5", value: "60 дней" },
+    { key: "6", value: "90 дней" },
+    { key: "7", value: "1 год" },
+  ],
 };

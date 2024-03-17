@@ -1,7 +1,7 @@
 export { default as HorizontalRule } from "./horizontal-rule/HorizontalRule";
 export { default as HorizontalList } from "./horizontal-list/HorizontalList";
 export { default as SmallButton } from "./small-button/SmallButton";
-export { default as BottomSheet } from "./bottom-sheet/BottomSheet";
+export { default as CustomBottomSheet } from "./bottom-sheet/CustomBottomSheet";
 export { default as BottomMenu } from "./bottom-menu/BottomMenu";
 export { default as Dropdown } from "./dropdown/Dropdown";
 export { default as Loader } from "./loader/Loader";

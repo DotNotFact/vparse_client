@@ -3,14 +3,18 @@ import { LinearGradient } from "expo-linear-gradient";
 import { Feather } from "@expo/vector-icons";
 import { Image, View } from "react-native";
 import { Text } from "@/components/ui";
+import { IUserMainProps } from "./Home";
 
 // const { width, height } = Dimensions.get("window");
 
+// type Props = {
+//   item: IUserMainProps;
+//   handleClick: any;
+// };
+
 export default function DatesCard({ item, handleClick }: any) {
   const nameAndDate = `${item?.firstName || ""} ${item?.lastName ? `${item?.lastName}` : ""}${item?.bDate ? `, ${item?.bDate}` : ""}`;
-
-  // Аналогично формируем строку для titlSign и swipe
-  const titleAndSwipe = `${item?.titlSign || ""}${item?.swipe ? `, ${item?.swipe}` : ""}`;
+  // const titleAndSwipe = `${(item?.isFriend === 0 && "Друг") || ""}${item?.swipe ? `, ${item?.swipe}` : ""}`;
 
   return (
     <View className="relative" style={{ flex: 1 }}>
@@ -29,17 +33,17 @@ export default function DatesCard({ item, handleClick }: any) {
         end={{ x: 0.5, y: 1 }}
       />
 
-      <View className="absolute bottom-10 justify-start w-full items-start pl-4">
+      <View className="absolute bottom-3 justify-start w-full items-start pl-4">
         <View className="flex-row justify-center items-center ">
           <Text className="text-2xl font-bold mr-2">{nameAndDate}</Text>
           <Feather size={25} color={"#fff"} name="heart" />
         </View>
 
         {/* Location */}
-        <View className="flex-row justify-center items-center ">
+        {/* <View className="flex-row justify-center items-center ">
           <Text className="font-regular">{titleAndSwipe}</Text>
           <Text className="font-regular mr-2">{item?.swipe}</Text>
-        </View>
+        </View> */}
       </View>
     </View>
   );

@@ -1,14 +1,14 @@
-import { BottomSheet, Button, Loader, Text } from "@/components/ui";
+import { CustomBottomSheet, Button, Loader, Text } from "@/components/ui";
 import Swiper from "react-native-deck-swiper";
-import { FC, useEffect, useRef, useState } from "react";
+import { FC, useCallback, useEffect, useRef, useState } from "react";
 import { Header } from "../Header/Header";
 import DatesCard from "./DatesCard";
 import { View } from "react-native";
 import { Filter, IFilterProps } from "./filter/Filter";
-import { GestureHandlerRootView } from "react-native-gesture-handler";
 import { UserService } from "@/services/user/user.service";
 import { useAuth } from "@/hooks/useAuth";
 import { FavoriteService } from "@/services/favorite/favorite.service";
+import { BottomSheetModal, useBottomSheetModal } from "@gorhom/bottom-sheet";
 
 export interface IUserMainProps {
   // Базовые поля
@@ -70,11 +70,14 @@ export const Home: FC = () => {
 
   const { user } = useAuth();
 
-  const refRBSheet: any = useRef();
-
   useEffect(() => {
     loadUsers(true);
   }, [filters]);
+
+  const updateFilters = (newFilters: IFilterProps) => {
+    setFilter(newFilters);
+    loadUsers(true); // Перезагружает пользователей с новыми фильтрами, сбрасывая предыдущие результаты
+  };
 
   const loadUsers = async (reset = false) => {
     if (isLoading) return;
@@ -126,15 +129,31 @@ export const Home: FC = () => {
   };
 
   const handleSwipe = (cardIndex: number) => {
-    if (cardIndex + 1 > users.length - 1) {
+    if (cardIndex > users.length - 1) {
       loadUsers();
     }
   };
 
+  const bottomSheetRef = useRef<BottomSheetModal>(null);
+
+  const { dismiss } = useBottomSheetModal();
+
+  const [bottomSheetIndex, setBottomSheetIndex] = useState(0);
+
+  const handleTogglePress = useCallback(() => {
+    if (bottomSheetIndex === 0) {
+      bottomSheetRef.current?.present();
+      setBottomSheetIndex(1);
+    } else {
+      dismiss();
+      setBottomSheetIndex(0);
+    }
+  }, []);
+
   // +, full update Swiper
   return (
-    <GestureHandlerRootView style={{ flex: 1 }}>
-      <Header filterShown={true} onPress={() => refRBSheet.current.open()} />
+    <View style={{ flex: 1 }}>
+      <Header filterShown={true} onPress={handleTogglePress} />
       <View className="p-3" style={{ flex: 1 }}>
         {users.length !== 0 && !isLoading ? (
           <Swiper
@@ -164,19 +183,16 @@ export const Home: FC = () => {
                 </Text>
               </View>
             </View>
-            <Button
-              style={{ flex: 0 }}
-              onPress={() => refRBSheet.current.open()}
-            >
+            <Button style={{ flex: 0 }} onPress={handleTogglePress}>
               Открыть фильтр
             </Button>
           </View>
         )}
       </View>
-      <BottomSheet bottomSheetRef={refRBSheet}>
-        <Filter />
-      </BottomSheet>
-    </GestureHandlerRootView>
+      <CustomBottomSheet ref={bottomSheetRef}>
+        <Filter onApplyFilters={updateFilters} />
+      </CustomBottomSheet>
+    </View>
   );
 };
 

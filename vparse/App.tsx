@@ -1,18 +1,21 @@
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { StatusBar as ExpoStatusBar } from "expo-status-bar";
 import AuthProvider from "@/providers/auth/AuthProvider";
-import { Platform, StatusBar, View } from "react-native";
+import { Platform, StatusBar } from "react-native";
 import Navigation from "@/navigation/Navigation";
 import { Toast } from "@/components/ui";
+import { GestureHandlerRootView } from "react-native-gesture-handler";
+import { BottomSheetModalProvider } from "@gorhom/bottom-sheet";
 
-//  tree shaking
-const queryClient = new QueryClient({
-  defaultOptions: {
-    queries: {
-      refetchOnWindowFocus: false,
-    },
-  },
-});
+// tree shaking
+// const queryClient = new QueryClient({
+//   defaultOptions: {
+//     queries: {
+//       refetchOnWindowFocus: false,
+//     },
+//   },
+// });
+// <QueryClientProvider client={queryClient}>
 
 // const { colorScheme, toggleColorScheme } = useColorScheme();
 // const navigation = useNavigation();
@@ -31,13 +34,13 @@ const queryClient = new QueryClient({
 // if (!fontsLoaded) {
 //   return null;
 // }
+// onLayout={onLayoutRootView}
 
 const android = Platform.OS == "android";
 
 export default function App() {
   return (
-    <View
-      // onLayout={onLayoutRootView}
+    <GestureHandlerRootView
       style={{
         flex: 1,
         paddingTop: android ? StatusBar.currentHeight : 0,
@@ -45,51 +48,19 @@ export default function App() {
     >
       <ExpoStatusBar
         style="light"
-        hidden={false}
         translucent={true}
         backgroundColor="#19191A"
       />
-      <QueryClientProvider client={queryClient}>
+      <BottomSheetModalProvider>
         <AuthProvider>
           {/* SafeAreaProvider */}
           <Navigation />
           <Toast />
         </AuthProvider>
-      </QueryClientProvider>
-    </View>
+      </BottomSheetModalProvider>
+    </GestureHandlerRootView>
   );
 }
-
-// export default   {
-//   const colorModeManager: StorageManager = {
-//     get: async () => {
-//       try {
-//         let val = await AsyncStorage.getItem("@my-app-color-mode");
-//         return val === "dark" ? "dark" : "light";
-//       } catch (e) {
-//         console.log(e);
-//         return "light";
-//       }
-//     },
-//     set: async (value: ColorMode) => {
-//       try {
-//         await AsyncStorage.setItem("@my-app-color-mode", value);
-//       } catch (e) {
-//         console.log(e);
-//       }
-//     },
-//   };
-//   return (
-//     <NativeBaseProvider theme={theme} colorModeManager={colorModeManager}>
-//       {/* Your App Goes Here */}
-//     </NativeBaseProvider>
-//   );
-// };
-
-// // @react-navigation/bottom-tabs
-// // @react-navigation/drawer
-
-// // react-native-dropdown-select-list
 
 // // expo-av - позволяет воспроизводить аудио и видео файлы, записывать аудио, управлять воспроизведением, и многое другое.
 // // expo-blur - предоставляет компонент BlurView, который позволяет добавлять эффект размытия (blur) к частям интерфейса.
